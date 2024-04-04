@@ -1,0 +1,59 @@
+# Notes App Privacy and Policy
+
+This Privacy Policy governs the manner in which user data is handled within the "Notes" app.
+Developed for streamlined note-taking purposes, the app prioritizes user privacy and data security.
+
+## 1. Features:
+
+The "Notes" app offers essential note-taking functionality, allowing users to seamlessly create,
+edit, and save notes. Additional features, including note organization and synchronization, will be
+progressively introduced in future updates to enhance user experience.
+
+## 2. Permissions:
+
+The app necessitates standard permissions for optimal performance:
+
+Notification: In anticipation of upcoming features, the app may issue notifications to users for
+reminders set within notes. However, this functionality has yet to be implemented.
+Storage: Access to device storage is required to enable users to incorporate photos and files into
+their notes. Presently, this feature remains under development.
+
+## 3. Data Collection:
+
+Respecting user privacy, the "Notes" app refrains from collecting any form of user data. Functioning
+entirely offline, it operates on a simple and free model without the need for user data aggregation.
+
+## 4. Data Usage:
+
+Given the absence of data collection mechanisms, the app does not engage in any form of data
+utilization. Users can rest assured that their information remains exclusively within their device's
+confines.
+
+## 5. Data Security:
+
+Recognizing the paramount importance of data security, the "Notes" app upholds stringent measures to
+safeguard user data. As data retention is decentralized, users retain full control over their
+information, minimizing any potential vulnerabilities.
+
+## 6. Third-party Sharing:
+
+As an offline application devoid of user data collection, the "Notes" app does not engage in any
+form of data sharing with external entities. Users can utilize the app with confidence, assured of
+their data's privacy.
+
+## 7. Terms of Service:
+
+The "Notes" app operates under a simple and unrestrictive framework, reflecting its commitment to
+user accessibility and convenience. There are no stringent terms of service governing app usage,
+thereby fostering a user-centric environment.
+
+## Contact Us:
+
+For inquiries regarding the privacy practices of the "Notes" app or to address any concerns, please
+reach out to us via kanye4112@gmail.com.
+
+## Changes to this Privacy Policy:
+
+We reserve the right to update or modify this Privacy Policy periodically. Users will be duly
+notified of any revisions through app notifications or updates, ensuring transparency and adherence
+to best practices.
