@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_menu_settings"
+        android:icon="@drawable/round_settings_24"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/main_menu_privacy_policy"
+        android:icon="@drawable/baseline_privacy_24"
+        android:title="@string/privacy_and_polices" />
+</menu>

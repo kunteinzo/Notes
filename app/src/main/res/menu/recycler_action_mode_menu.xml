@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/recycler_menu_delete"
+        android:icon="@drawable/round_delete_24"
+        android:title="Delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/recycler_menu_select_all"
+        android:icon="@drawable/round_select_all_24"
+        android:title="Select All"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/recycler_menu_deselect"
+        android:icon="@drawable/round_deselect_24"
+        android:title="Deselect"
+        app:showAsAction="ifRoom" />
+</menu>
