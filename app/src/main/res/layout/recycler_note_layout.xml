@@ -9,12 +9,13 @@
     android:backgroundTint="@color/white_black"
     android:elevation="3dp">
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <ImageView
         android:id="@+id/recycler_note_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:visibility="gone"
+        android:importantForAccessibility="no"
+        android:src="@drawable/round_done_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +23,7 @@
     <TextView
         android:id="@+id/recycler_note_title"
         android:layout_width="0dp"
+        android:textColor="@color/black_white"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:padding="4dp"
@@ -36,6 +38,7 @@
     <TextView
         android:id="@+id/recycler_note_content"
         android:layout_width="0dp"
+        android:textColor="@color/black_white"
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:padding="4dp"

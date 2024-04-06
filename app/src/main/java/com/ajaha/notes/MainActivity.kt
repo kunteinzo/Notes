@@ -1,7 +1,7 @@
 package com.ajaha.notes
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -18,12 +18,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var swipeRefreshNote: SwipeRefreshLayout
+    private lateinit var emptyLabel: TextView
     private lateinit var recyclerNote: RecyclerView
     private lateinit var fabAddNote: FloatingActionButton
 
@@ -60,8 +61,9 @@ class MainActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.main_toolbar)
         swipeRefreshNote = findViewById(R.id.swipe_refresh_note)
+        emptyLabel = findViewById(R.id.main_empty_label)
         recyclerNote = findViewById(R.id.recycler_note)
-        fabAddNote = findViewById(R.id.fab_add_note)
+        fabAddNote = findViewById(R.id.main_fab_add_note)
 
         setSupportActionBar(toolbar)
         swipeRefreshNote.setOnRefreshListener {
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
                 Intent(applicationContext, EditorActivity::class.java)
             )
         }
+        checkForEmptyLabel()
     }
 
     override fun onResume() {
@@ -109,6 +112,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkForEmptyLabel() {
+        emptyLabel.visibility = if ((recyclerNote.adapter as NoteAdapter).itemCount == 0) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 
     private fun showPrivacyAndPolicy() {
@@ -161,18 +172,22 @@ class MainActivity : AppCompatActivity() {
         ppDialog.create().show()
     }
 
-    class NoteAdapter(private val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteVH>() {
+    class NoteAdapter(private val activity: Activity) :
+        RecyclerView.Adapter<NoteAdapter.NoteVH>() {
 
         var isEnable = false
         var isSelectAll = false
         var mainViewModel = MainViewModel()
 
-        private val databaseHelper = DatabaseHelper(context)
+        private val databaseHelper = DatabaseHelper(activity)
         private var noteList = databaseHelper.getNotes()
         private var selectList = ArrayList<NoteModel>()
 
+        private val emptyLabel: TextView = activity.findViewById(R.id.main_empty_label)
+        private val fab: FloatingActionButton = activity.findViewById(R.id.main_fab_add_note)
+
         class NoteVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val checkBox: AppCompatCheckBox = itemView.findViewById(R.id.recycler_note_check)
+            val checkView: ImageView = itemView.findViewById(R.id.recycler_note_check)
             val title: TextView = itemView.findViewById(R.id.recycler_note_title)
             val content: TextView = itemView.findViewById(R.id.recycler_note_content)
             val date: TextView = itemView.findViewById(R.id.recycler_note_date)
@@ -180,7 +195,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteVH {
             return NoteVH(
-                LayoutInflater.from(context).inflate(R.layout.recycler_note_layout, parent, false)
+                LayoutInflater.from(activity).inflate(R.layout.recycler_note_layout, parent, false)
             )
         }
 
@@ -206,9 +221,10 @@ class MainActivity : AppCompatActivity() {
                         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                             isEnable = true
                             clickItem(holder)
-                            mainViewModel.get().observe(context as LifecycleOwner) {
+                            mainViewModel.get().observe(activity as LifecycleOwner) {
                                 mode?.title = "%s Selected".format(it)
                             }
+                            fab.visibility = View.GONE
                             return true
                         }
 
@@ -248,6 +264,7 @@ class MainActivity : AppCompatActivity() {
                             isSelectAll = false
                             selectList.clear()
                             loadNotes()
+                            fab.visibility = View.VISIBLE
                         }
                     }
                     holder.itemView.startActionMode(actionModeCallback)
@@ -260,28 +277,28 @@ class MainActivity : AppCompatActivity() {
                 if (isEnable) {
                     clickItem(holder)
                 } else {
-                    context.startActivity(
-                        Intent(context, EditorActivity::class.java).putExtra(
+                    activity.startActivity(
+                        Intent(activity, EditorActivity::class.java).putExtra(
                             "id", note.id
                         )
                     )
                 }
             }
 
-            if (isSelectAll) {
-                holder.checkBox.visibility = View.VISIBLE
+            holder.checkView.visibility = if (isSelectAll) {
+                View.VISIBLE
             } else {
-                holder.checkBox.visibility = View.GONE
+                View.GONE
             }
         }
 
         private fun clickItem(holder: NoteVH) {
             val noteModel = noteList[holder.adapterPosition]
-            if (holder.checkBox.isVisible) {
-                holder.checkBox.visibility = View.GONE
+            if (holder.checkView.isVisible) {
+                holder.checkView.visibility = View.GONE
                 selectList.remove(noteModel)
             } else {
-                holder.checkBox.visibility = View.VISIBLE
+                holder.checkView.visibility = View.VISIBLE
                 selectList.add(noteModel)
             }
             mainViewModel.set(selectList.size.toString())
@@ -291,6 +308,11 @@ class MainActivity : AppCompatActivity() {
         fun loadNotes() {
             noteList = databaseHelper.getNotes()
             notifyDataSetChanged()
+            emptyLabel.visibility = if (itemCount == 0) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 }
